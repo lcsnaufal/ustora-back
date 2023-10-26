@@ -3,6 +3,7 @@ package senac.java.Controllers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.json.JSONObject;
+import senac.java.Domain.Salesperson;
 import senac.java.Domain.Users;
 import senac.java.Services.ResponseEndPoints;
 
@@ -29,9 +30,9 @@ public class UserController {
 
                 List<Users> getAllFromArray = Users.getAllUsers(usersList);
 
-                System.out.println(Users.getAllUsers(usersList) + "AQUI");
-
                 if(!getAllFromArray.isEmpty()){
+
+                    Users users = new Users();
 
                     for(Users user : getAllFromArray){
                         System.out.println("Name: " + user.getName());
@@ -43,6 +44,13 @@ public class UserController {
                         System.out.println("Cpf" + user.getCpf());
                         System.out.println("");
                     }
+
+                    System.out.println("getallfromarray"+getAllFromArray);
+                    System.out.println("usersList"+usersList);
+
+                    response = "Dados encontrados com sucesso";
+                    res.enviarResponseJson(exchange, users.arrayToJson(getAllFromArray), 200);
+
                 }
                 else {
                     System.out.println("Nenhum usuario foi encontrado");
@@ -67,6 +75,14 @@ public class UserController {
 
                     usersList.add(user);
                     System.out.println("UserList contém: " + user.toJson());
+                    res.enviarResponseJson(exchange, user.toJson(), 200);
+                }
+                catch(Exception e){
+                    String ExceptionResponse = e.toString();
+
+                    System.out.println(ExceptionResponse);
+                    System.out.println("------------------------------------------------");
+
                 }
             }
 
@@ -83,7 +99,11 @@ public class UserController {
                 res.enviarResponse(exchange, response);
 
             }
-
+            else if ("OPTIONS".equals(exchange.getRequestMethod())) {
+                exchange.sendResponseHeaders(204, -1);
+                exchange.close();
+                return;
+            }
             else {
                 response = "nao definido." + "O metodo utilizado foi: " + exchange.getRequestMethod() + " So aceitamos get, put, post e delete";
                 res.enviarResponse(exchange, response);

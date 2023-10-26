@@ -100,6 +100,45 @@ public class Users {
         return json;
     }
 
+    public JSONObject arrayToJson(List<Users> usersList) {
+        JSONObject json = new JSONObject();
+
+        if (!usersList.isEmpty()) {
+            var keyJson = 0;
+
+            for (Users users : usersList) {
+
+                JSONObject jsonFor = new JSONObject();
+
+
+
+                jsonFor.put("name", users.getName());
+                jsonFor.put("lastName", users.getLastName());
+                jsonFor.put("phoneNumber", users.getAge());
+                jsonFor.put("address", users.getAddress());
+                jsonFor.put("email", users.getEmail());
+                jsonFor.put("password", users.getPassword());
+                jsonFor.put("cpf", users.getCpf());
+
+                json.put(String.valueOf(keyJson), jsonFor);
+
+                keyJson++;
+
+                System.out.println(users.getName());
+
+
+
+            }
+            return json;
+        }
+
+        else{
+
+            return null;
+        }
+
+    }
+
     public static Users getUser(int index, List<Users> usersList){
 
         if(index >= 0 && index < usersList.size())  {

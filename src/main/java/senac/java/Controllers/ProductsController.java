@@ -6,7 +6,7 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.InputStream;
 
-import senac.java.Domain.Salesperson;
+import senac.java.Domain.Products;
 import senac.java.Services.ResponseEndPoints;
 
 import java.util.ArrayList;
@@ -14,12 +14,12 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-public class SalesPersonController {
+public class ProductsController {
 
     static ResponseEndPoints res = new ResponseEndPoints();
 
-    private static List<Salesperson> salespersonList = new ArrayList<>();
-    public static class SalesPersonHandler implements HttpHandler {
+    private static List<Products> productsList = new ArrayList<>();
+    public static class ProductsHandler implements HttpHandler {
 
         @Override
         public void handle(HttpExchange exchange) throws IOException {
@@ -28,28 +28,28 @@ public class SalesPersonController {
 
             if ("GET".equals(exchange.getRequestMethod())){
 
-                List<Salesperson> getAllFromArray = Salesperson.getAllSalesperson(salespersonList);
+                List<Products> getAllFromArray = Products.getAllProducts(productsList);
 
 
                 if(!getAllFromArray.isEmpty()){
 
-                    Salesperson salesperson = new Salesperson();
+                    Products products = new Products();
 
-                    for(Salesperson salespersonJson : getAllFromArray){
-                        System.out.println("Name: " + salespersonJson.getName());
-                        System.out.println("Last Name: " + salespersonJson.getLastName());
-                        System.out.println("Cpf" + salespersonJson.getCpf());
-                        System.out.println("Email: " + salespersonJson.getEmail());
-                        System.out.println("Número de telefone: " + salespersonJson.getPhoneNumber());
-                        System.out.println("Address: " + salespersonJson.getAddress());
+                    for(Products productsJson : getAllFromArray){
+                        System.out.println("Name: " + productsJson.getPName());
+                        System.out.println("Price: " + productsJson.getPPrice());
+                        System.out.println("Color" + productsJson.getPColor());
+                        System.out.println("Description: " + productsJson.getPDescription());
+                        System.out.println("Quantity: " + productsJson.getPQuantity());
+                        System.out.println("Img: " + productsJson.getPImg());
                         System.out.println("");
                     }
 
                     System.out.println("getallfromarray"+getAllFromArray);
-                    System.out.println("salespersonList"+salespersonList);
+                    System.out.println("productsList"+productsList);
 
                     response = "Dados encontrados com sucesso";
-                    res.enviarResponseJson(exchange, salesperson.arrayToJson(getAllFromArray), 200);
+                    res.enviarResponseJson(exchange, products.arrayToJson(getAllFromArray), 200);
                 }
 
                 else{
@@ -64,20 +64,20 @@ public class SalesPersonController {
 
                     JSONObject json = new JSONObject(new String(requestBody.readAllBytes()));
 
-                    Salesperson salesperson = new Salesperson(
-                        json.getString("name"),
-                        json.getString("lastName"),
-                        json.getString("phoneNumber"),
-                        json.getString("cpf"),
-                        json.getString("email"),
-                        json.getString("address")
+                    Products products = new Products(
+                            json.getString("name"),
+                            json.getString("price"),
+                            json.getString("color"),
+                            json.getString("description"),
+                            json.getString("quantity"),
+                            json.getString("img")
                     );
 
-                    salespersonList.add(salesperson);
+                    productsList.add(products);
 
-                    System.out.println("SalesPersonList contém: " + salesperson.toJson());
+                    System.out.println("ProductsList contém: " + products.toJson());
 
-                    res.enviarResponseJson(exchange, salesperson.toJson(), 200);
+                    res.enviarResponseJson(exchange, products.toJson(), 200);
                 }
                 catch(Exception e){
                     String ExceptionResponse = e.toString();
@@ -89,17 +89,12 @@ public class SalesPersonController {
             }
 
             else if ("PUT".equals(exchange.getRequestMethod())){
-                response = "Essa e a rota de vendedor - PUT";
+                response = "Essa e a rota de produtos - PUT";
                 res.enviarResponse(exchange, response);
             }
             else if ("DELETE".equals(exchange.getRequestMethod())){
-                response = "Essa e a rota de vendedor - DELETE";
+                response = "Essa e a rota de produtos - DELETE";
                 res.enviarResponse(exchange, response);
-            }
-            else if ("OPTIONS".equals(exchange.getRequestMethod())){
-                exchange.sendResponseHeaders(204, -1);
-                exchange.close();
-                return;
             }
             else {
                 response = "nao definido." + "O metodo utilizado foi: " + exchange.getRequestMethod() + " So aceitamos get, put, post e delete";

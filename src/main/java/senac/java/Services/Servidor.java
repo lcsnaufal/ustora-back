@@ -10,7 +10,7 @@ import java.io.IOException; //Erros do servidor e o que fazer
 import java.io.OutputStream; //
 import java.net.InetSocketAddress; // Protocolo de leitura da internet // ele quem abre o caminho para as informacoes na internet
 
-import senac.java.Controllers.ProductController;
+import senac.java.Controllers.ProductsController;
 import senac.java.Controllers.UserController;
 import senac.java.Controllers.SalesPersonController;
 
@@ -25,7 +25,7 @@ public class Servidor {
 
         HttpHandler SalespersonHandler = new SalesPersonController.SalesPersonHandler();
         HttpHandler UserHandler = new UserController.UserHandler();
-        HttpHandler ProductsHandler = new ProductController.ProductsHandler();
+        HttpHandler ProductsHandler = new ProductsController.ProductsHandler();
 
 
         server.createContext("/api/vendedor", exchange -> {
@@ -38,7 +38,7 @@ public class Servidor {
             UserHandler.handle(exchange);
         });
 
-        server.createContext("/api/products", exchange -> {
+        server.createContext("/api/produtos", exchange -> {
             configureCorsHeaders(exchange);
             ProductsHandler.handle(exchange);
         });
