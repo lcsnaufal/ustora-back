@@ -3,6 +3,7 @@ package senac.java.Controllers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.json.JSONObject;
+import senac.java.DAL.UserDal;
 import senac.java.Domain.Salesperson;
 import senac.java.Domain.Users;
 import senac.java.Services.ResponseEndPoints;
@@ -25,6 +26,7 @@ public class UserController {
         public void handle(HttpExchange exchange) throws IOException {
 
             String response = "";
+            UserDal userDal = new UserDal();
 
             if ("GET".equals(exchange.getRequestMethod())) {
 
@@ -62,11 +64,12 @@ public class UserController {
                 try (InputStream requestBody = exchange.getRequestBody()) {
 
                     JSONObject json = new JSONObject(new String(requestBody.readAllBytes()));
+                    int resp = 0;
 
                     Users user = new Users(
                             json.getString("name"),
                             json.getString("lastName"),
-                            json.getInt("age"),
+                            json.getString("age"),
                             json.getString("address"),
                             json.getString("email"),
                             json.getString("password"),
@@ -74,8 +77,19 @@ public class UserController {
                     );
 
                     usersList.add(user);
-                    System.out.println("UserList contém: " + user.toJson());
-                    res.enviarResponseJson(exchange, user.toJson(), 200);
+
+                    resp = userDal.inserirUsuario(user.name, user.lastName, user.age, user.address, user.email, user.password, user.cpf);
+
+
+
+                    if (resp == 0){
+                        response = "Houve um problema ao criar o usuário";
+                    }
+                    else {
+                        response = "Usuário criado com sucesso";
+                    }
+
+                    res.enviarResponse(exchange, response);
                 }
                 catch(Exception e){
                     String ExceptionResponse = e.toString();
@@ -87,6 +101,14 @@ public class UserController {
             }
 
             else if ("PUT".equals(exchange.getRequestMethod())) {
+
+                userDal = new UserDal();
+
+                try{
+                    userDal.atualizarUsuario();
+                } catch (Exception e){
+                    System.out.println("O erro foi: " + e);
+                }
 
                 response = "Essa e a rota de usuario - PUT";
                 res.enviarResponse(exchange, response);

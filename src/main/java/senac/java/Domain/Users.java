@@ -10,7 +10,7 @@ public class Users {
     int id = 0;
     public String name = "";
     public String lastName = "";
-    public int age = 0;
+    public String age = "";
     public String address = "";
     public String email = "";
     public String password = "";
@@ -19,7 +19,7 @@ public class Users {
     public Users(){
     }
 
-    public Users(String name, String lastName, int age, String Address, String email, String password, String cpf){
+    public Users(String name, String lastName, String age, String Address, String email, String password, String cpf){
         this.name = name;
         this.lastName = lastName;
         this.age = age;
@@ -45,11 +45,11 @@ public class Users {
         this.lastName = lastName;
     }
 
-    public int getAge(){
+    public String getAge(){
         return age;
     }
 
-    public void setAge(int age){
+    public void setAge(String age){
         this.age = age;
     }
 

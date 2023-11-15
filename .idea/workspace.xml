@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="69714a3a-5545-435a-af7b-120d42d58fc2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/senac/java/Controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/senac/java/Controllers/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/senac/java/Domain/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/senac/java/Domain/Users.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../teste/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../teste/.idea/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../teste/.idea/gradle.xml" beforeDir="false" />
