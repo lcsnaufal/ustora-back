@@ -14,9 +14,9 @@ public class ProductsDal {
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=pi";
-            String usuario = "116128412023.1";
-            String senha = "senac@12841";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=pi;trustServerCertificate=true";    //IntegratedSecurity=true em casa
+            String usuario = "user";
+            String senha = "123456";
 
             conexao = DriverManager.getConnection(url, usuario, senha);
 
