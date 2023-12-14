@@ -45,9 +45,6 @@ public class SalesPersonController {
                         System.out.println("");
                     }
 
-                    System.out.println("getallfromarray"+getAllFromArray);
-                    System.out.println("salespersonList"+salespersonList);
-
                     response = "Dados encontrados com sucesso";
                     res.enviarResponseJson(exchange, salesperson.arrayToJson(getAllFromArray), 200);
                 }
